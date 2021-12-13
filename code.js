@@ -32,14 +32,82 @@ document.getElementById('levelSetup').innerHTML= `
 /** fonction pour choisir le + x - / */
 function setExpression(ex){
     expression = ex.value;
-    showScoreInformation();
+    startTestQuestion();
 }
 
 
 /** fonction pour récuperer le level */
 function setLevel(lev){
     level = lev.value;
+    switch(level){
+        case '2':
+            randomRange =10;
+            break;
+        case '2':
+            randomRange =100;
+            break;
+        case '3':
+            randomRange =1000;
+            break;
+        case '4':
+            randomRange =10000;
+            break;
+        case '5':
+            randomRange =100000;
+            break;
+    }
+    startTestQuestion();
+}
+
+/** fonction : si il y a expression et level alors on affiche*/
+function startTestQuestion(){
+/** si expression n'est pas vide et level est plus grand que 0*/
+    if(expression!= '' && level > 0){
+        calculateTest();
+    }
     showScoreInformation();
+}
+
+function calculateTest(){
+
+    number1 = Math.floor(Math.random()*randomRange);
+    number2 = Math.floor(Math.random()*randomRange);
+
+    switch(expression){
+        case '+' :
+            result = number1 + number2;
+            break;
+        case '-' :
+            result = number1 - number2;
+            break;
+        case 'x' :
+            result = number1 * number2;
+            break;
+        case '/' :
+            if(number2 === 0){
+                result = number1 / number2 + 1;
+            }else{
+                result = number1 / number2;
+            }
+            break;
+    }
+TestQuestion();
+}
+
+function TestQuestion(){
+    document.getElementById('levelSetup').innerHTML='';/**ici pour faire en sorte que cela s'enleve une fois choisi */
+
+    document.getElementById('calcule').innerHTML=`
+        <div class="input-group input-group-lg p-5">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="font-size: 40px;">${number1} ${expression} ${number2} =</span>
+            </div>
+             <input type="number" id="playerInput" class="form-control" style="font-size: 40px;">
+             <div class="input-group-prepend">
+                <button class="btn btn-success" style="font-size: 40px;" onclick="setUserInput()">Validate</button>
+            </div>
+        </div>`
+    ;
 }
 
 function showScoreInformation(){
