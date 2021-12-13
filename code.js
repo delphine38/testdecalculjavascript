@@ -22,9 +22,29 @@ document.getElementById('levelSetup').innerHTML= `
                 </div>
                 <div class="border border-dark p-2">
                     <p class="text-centrer bg-dark text-white p-3 mb-2 font-weight-bold">Difficulty</p>
-                    <button class="btn btn-primary" value="1" onclick="setExpression(this)">1</button>
-                    <button class="btn btn-primary" value="2" onclick="setExpression(this)">2</button>
-                    <button class="btn btn-primary" value="3" onclick="setExpression(this)">3</button>
-                    <button class="btn btn-primary" value="4" onclick="setExpression(this)">4</button>
+                    <button class="btn btn-primary" value="1" onclick="setLevel(this)">1</button>
+                    <button class="btn btn-primary" value="2" onclick="setLevel(this)">2</button>
+                    <button class="btn btn-primary" value="3" onclick="setLevel(this)">3</button>
+                    <button class="btn btn-primary" value="4" onclick="setLevel(this)">4</button>
                 </div>
             </div>`;
+
+/** fonction pour choisir le + x - / */
+function setExpression(ex){
+    expression = ex.value;
+    showScoreInformation();
+}
+
+
+/** fonction pour récuperer le level */
+function setLevel(lev){
+    level = lev.value;
+    showScoreInformation();
+}
+
+function showScoreInformation(){
+    document.getElementById('score').innerHTML = `
+        <p class="m-0">Score : 20/20</p>
+        <p class="m-0">Expression : ${expression} </p>
+        <p class="m-0">Level : ${level} </p>`;
+}
