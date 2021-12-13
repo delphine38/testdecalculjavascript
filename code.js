@@ -110,6 +110,17 @@ function TestQuestion(){
     ;
 }
 
+function setUserInput(){
+    /**parseFloat prend la valeur texte et la met en format décimal */
+    let inputUserResult = parseFloat(document.getElementById('playerInput').value);
+if(!isNaN(inputUserResult)){
+    userInput = inputUserResult;
+
+}else{
+    alert('oups , il faut mettre une valeur');
+}
+}
+
 function showScoreInformation(){
     document.getElementById('score').innerHTML = `
         <p class="m-0">Score : 20/20</p>
