@@ -69,6 +69,7 @@ function startTestQuestion(){
 }
 
 function calculateTest(){
+    document.getElementById('result').innerHTML='';
 
     number1 = Math.floor(Math.random()*randomRange);
     number2 = Math.floor(Math.random()*randomRange);
@@ -85,9 +86,9 @@ function calculateTest(){
             break;
         case '/' :
             if(number2 === 0){
-                result = number1 / number2 + 1;
+                result = (number1 / number2).toFixed(2) + 1;
             }else{
-                result = number1 / number2;
+                result = (number1 / number2).toFixed(2);
             }
             break;
     }
@@ -113,17 +114,48 @@ function TestQuestion(){
 function setUserInput(){
     /**parseFloat prend la valeur texte et la met en format décimal */
     let inputUserResult = parseFloat(document.getElementById('playerInput').value);
-if(!isNaN(inputUserResult)){
+    if(!isNaN(inputUserResult)){
     userInput = inputUserResult;
-
+    checkUserResult();
 }else{
     alert('oups , il faut mettre une valeur');
 }
 }
+function checkUserResult(){
+    if(userInput == result){
+        document.getElementById('result').innerHTML =`
+        <div class="p-5">
+            <div class="p-3 text-center bg-success text-white" style="font-size: 40px;"> ${number1} ${expression} ${number2} = ${userInput} good Job !
+            </div>
+        </div>`;
+        score++;
+    }else{
+        document.getElementById('result').innerHTML =`
+        <div class="p-5">
+            <div class="p-3 text-center bg-danger text-white" style="font-size: 40px;"> ${number1} ${expression} ${number2} = ${userInput} isn't correct ! it should be ${result}
+            </div>
+        </div>`;
+    }
+    counter++;
+
+    showScoreInformation();/** pour relancer un nouveau test après le 1er */
+    if(counter < 10){
+        setTimeout(calculateTest, 2000);
+    }else{
+        document.getElementById('score').innerHTML='';
+        document.getElementById('calcule').innerHTML='';
+        document.getElementById('result').innerHTML= `
+        <div class="p-5">
+            <div class="p-3 text-center bg-warning text-white" style="font-size: 40px;"> Test fini, ton Score est de ${score}/10 😊!
+            </div>
+        </div>`;
+    }
+
+}
 
 function showScoreInformation(){
     document.getElementById('score').innerHTML = `
-        <p class="m-0">Score : 20/20</p>
+        <p class="m-0">Score : ${score}/10</p>
         <p class="m-0">Expression : ${expression} </p>
         <p class="m-0">Level : ${level} </p>`;
 }
